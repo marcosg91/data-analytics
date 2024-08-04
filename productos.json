@@ -1,0 +1,16 @@
+{
+    "Fideo": {
+        "nombre": "Fideo",
+        "marca": "Marolio",
+        "precio": 1500.0,
+        "cantidad": 500,
+        "fecha_caducidad": "27/05/2025"
+    },
+    "Televisor": {
+        "nombre": "Televisor",
+        "marca": "Samsung",
+        "precio": 1500000.0,
+        "cantidad": 15,
+        "garantia": 12
+    }
+}
