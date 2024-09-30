@@ -63,8 +63,25 @@ def agregar_producto(gestion, tipo_producto):
         print(f'Error inesperado: {e}')
 
 def buscar_producto_por_nombre(gestion):
-    nombre = input('Ingrese el nombre del producto a buscar: ')
-    gestion.leer_producto(nombre)
+    try:
+        nombre = input('Ingrese el nombre del producto a buscar: ').strip()
+        if nombre:
+            producto = gestion.leer_producto(nombre)  # Guardar la variable de producto
+
+            if producto:  # Verificar si se encontró un producto
+                if isinstance(producto, ProductoAlimenticio):
+                    print(f'Producto encontrado: {producto.nombre} - Fecha de caducidad: {producto.fecha_caducidad}')
+                elif isinstance(producto, ProductoElectronico):
+                    print(f'Producto encontrado: {producto.nombre} - Garantía: {producto.garantia} meses')
+                else:
+                    print(f'Producto encontrado: {producto.nombre} - Es un producto general.')
+            else:
+                print("No se encontró el producto.")
+        else:
+            print("No ingresaste un nombre válido. Inténtalo de nuevo.")
+    except Exception as e:
+        print(f'Error al intentar buscar el producto: {e}')
+    input('Presione Enter para continuar...')
 
 def actualizar_precio(gestion):
     nombre = input('Ingrese el nombre del producto para actualizar su precio: ')
@@ -79,16 +96,22 @@ def eliminar_producto_por_nombre(gestion):
 
 def mostrar_todos_los_productos(gestion):
     print('########## LISTADO COMPLETO DE LOS PRODUCTOS ##########')
-    
-    for producto in gestion.leer_datos().values():
-        if 'fecha_caducidad' in producto:
-            print(f"{producto['nombre']} - Fecha de caducidad: {producto['fecha_caducidad']}")
-        else:
-            print(f"{producto['nombre']} - Meses de garantía: {producto['garantia']}")
-    print('########################################################')
+    try:
+        productos = gestion.leer_todos_los_productos()
+        for producto in productos:
+            if isinstance(producto, ProductoAlimenticio):
+                print(f'{producto.nombre} {producto.marca} {producto.fecha_caducidad}')
+            elif isinstance(producto, ProductoElectronico):
+                print(f'{producto.nombre} {producto.marca} {producto.garantia}')    
+
+    except Exception as e:
+        print(f'Error al mostrar los productos {e}')
+    print('########## ########## ########## ########## ########## ##########')
+    input('Presione Enter para continuar...')
 
 if __name__ == "__main__":
-    gestion = GestionProductos('productos.json')
+    gestion = GestionProductos()
+
     while True:
         limpiar_pantalla()
         mostrar_menu()

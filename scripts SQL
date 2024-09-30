@@ -1,0 +1,50 @@
+-- Crear la base de datos
+CREATE DATABASE productos;
+
+-- Mostrar bases de datos
+SHOW DATABASES;
+
+-- Usar la base de datos creada
+USE productos;
+
+-- Crear la tabla de Productos con 'Nombre' como clave primaria
+CREATE TABLE Productos (
+    Nombre VARCHAR(50) PRIMARY KEY,    -- Nombre del producto como clave primaria
+    Marca VARCHAR(50) NOT NULL,        -- Marca del producto
+    Precio DECIMAL(10, 2) NOT NULL,    -- Precio del producto
+    Cantidad INT NOT NULL               -- Cantidad en stock
+); 
+
+-- Crear tabla de ProductoAlimenticio
+CREATE TABLE ProductoAlimenticio (
+    Nombre VARCHAR(50),                 -- Nombre del producto
+    Fecha_caducidad DATE NOT NULL,      -- Fecha de caducidad
+    PRIMARY KEY (Nombre),               -- Clave primaria
+    FOREIGN KEY (Nombre) REFERENCES Productos(Nombre) -- Clave foránea que referencia a Productos
+);
+
+-- Crear tabla de ProductoElectronico
+CREATE TABLE ProductoElectronico (
+    Nombre VARCHAR(50),                 -- Nombre del producto
+    Garantia VARCHAR(50) NOT NULL,      -- Información de garantía
+    PRIMARY KEY (Nombre),               -- Clave primaria
+    FOREIGN KEY (Nombre) REFERENCES Productos(Nombre) -- Clave foránea que referencia a Productos
+);
+
+-- Para visualizar la estructura de la tabla ProductoAlimenticio
+DESCRIBE ProductoAlimenticio;
+
+-- Para modificar una columna en la tabla ProductoElectronico
+ALTER TABLE ProductoElectronico 
+MODIFY COLUMN Garantia VARCHAR(50) NOT NULL;
+
+-- Para agregar una columna en la tabla ProductoElectronico
+ALTER TABLE ProductoElectronico 
+ADD Campo_prueba VARCHAR(150);
+
+-- Para eliminar una columna en la tabla ProductoElectronico
+ALTER TABLE ProductoElectronico 
+DROP COLUMN Campo_prueba;
+
+-- Consultar todos los productos
+SELECT * FROM productos;
